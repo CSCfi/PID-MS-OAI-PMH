@@ -1,0 +1,20 @@
+{@fi.csc.pid.oai.model.Tietue tietue}
+<?xml version="1.0" encoding="UTF-8"?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/
+         http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+  <responseDate>{li.now}</responseDate>
+  <request verb="ListIdentifiers" {li.getFrom()} metadataPrefix="{li.metadataPrefix}">
+           {!set="physics:hep">http://an.oa.org/OAI-script!}
+  </request>
+  <ListIdentifiers>
+  {#for t in li.ral}
+   <header>
+    <identifier>{tietue:getIdentifier(t)}</identifier>
+    <datestamp>{tietue:epäsuoraaika(t)}</datestamp>
+    {!<setSpec>physic:hep</setSpec>!}
+   </header>
+  {/for}
+  </ListIdentifiers>
+</OAI-PMH>
