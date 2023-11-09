@@ -20,7 +20,7 @@ public class XML {
 
     public final static String NL = "\n";
     public final static String SISENNYS = "    ";
-    public final static String BASEURL = "https://oai-pmh.rahtiapp.fi/v2/oai";
+    public final static String BASEURL = "https://oai-pmh.2.rahtiapp.fi/v2/oai";
     public final static String XMLSTART = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
             "<OAI-PMH xmlns=\"http://www.openarchives.org/OAI/2.0/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd\">\n"+
             "  <responseDate>";

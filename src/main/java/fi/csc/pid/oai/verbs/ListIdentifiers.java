@@ -15,7 +15,7 @@ public class ListIdentifiers {
     public String from;
     public String metadataPrefix;
     public Tietue[] ra;
-    public List ral;
+    public List<Tietue> ral;
 
     public ListIdentifiers(Tietue[] ra, String metadataPrefix,String from) {
         this.ra = ra;

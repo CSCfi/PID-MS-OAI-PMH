@@ -1,17 +1,14 @@
 package fi.csc.pid.oai.verbs;
 
 import fi.csc.pid.oai.XML;
-import fi.csc.pid.oai.model.Aika;
 import fi.csc.pid.oai.model.Tietue;
 import org.jboss.logging.Logger;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.Arrays;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import static fi.csc.pid.oai.XML.BASEURL;
@@ -58,7 +55,8 @@ public class ListRecords {
         XML xml = new XML();
         StringBuilder sb = xml.newBuilder(parametrit(metadataPrefix, from, until));
         sb.append("<ListRecords>");
-        sb.append(Arrays.stream(ra).map(this::käsittele).collect(Collectors.joining()));
+        sb.append(Arrays.stream(ra).filter(t -> t.identifier != null)
+                .filter(t -> t.identifier.startsWith("urn:nbn:fi:")).map(this::käsittele).collect(Collectors.joining()));
         sb.append("</ListRecords>");
         sb.append(OAI_PMH_END);
         return sb.toString();
@@ -97,7 +95,7 @@ public class ListRecords {
             //LOG.info("ztd was "+zdt);
             return Arrays.stream(ra).filter(r -> zdt.isBefore(r.getDate().atStartOfDay(ZoneId.of("UTC")))).toArray(Tietue[]::new);
         } catch (DateTimeParseException e) {
-            LOG.warn("Error in parsing from: "+e.toString());
+            LOG.warn("Error in parsing from: "+e);
             return null;
         }
     }
@@ -136,7 +134,7 @@ public class ListRecords {
             sb.append(NL);sb.append(OAIDC);
             lisää(sb, fb.getCreator(), "dc:creator");
             lisää(sb, fb.getPublisher(), "dc:publisher");
-            lisää(sb, fb.getPid_type(), "dc:type");
+            lisää(sb, escape(fb.getPid_type()), "dc:type");
             lisää(sb, fb.getIdentifier(), "dc:identifier");
             lisää(sb, fb.getIdentifier_url(), "dc:identifier");
             // Vaihtoehtoja edelliselle subject, title, description...
@@ -147,6 +145,12 @@ public class ListRecords {
             return sb.toString();
         }
         return "Error, fb was null ";
+    }
+
+    private String escape(String pidType) {
+        if (pidType.contains("&"))
+            return pidType.replace("&", "&amp;");
+        else return pidType;
     }
 
     /**
@@ -184,7 +188,7 @@ public class ListRecords {
             //LOG.info("ztd was "+zdt);
             return Arrays.stream(ra).filter(r -> zdt.isAfter(r.getDate().atStartOfDay(ZoneId.of("UTC")))).toArray(Tietue[]::new);
         } catch (DateTimeParseException e) {
-            LOG.warn("Error in parsing until: "+e.toString());
+            LOG.warn("Error in parsing until: "+e);
             return null;
         }
     }

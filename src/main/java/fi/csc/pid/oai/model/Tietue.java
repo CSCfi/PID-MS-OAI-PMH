@@ -15,7 +15,7 @@ import java.time.LocalDate;
 public class Tietue {
 
     long id;
-    String identifier;
+    public String identifier;
     LocalDate date;
     String identifier_url;
     String pid_type;

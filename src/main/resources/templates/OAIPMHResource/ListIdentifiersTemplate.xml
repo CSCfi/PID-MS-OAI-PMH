@@ -9,10 +9,10 @@
            {!set="physics:hep">http://an.oa.org/OAI-script!}
   </request>
   <ListIdentifiers>
-  {#for t in li.ral}
+  {#for tietue in li.ral}
    <header>
-    <identifier>{tietue:getIdentifier(t)}</identifier>
-    <datestamp>{tietue:epäsuoraaika(t)}</datestamp>
+    <identifier>{tietue.getIdentifier()}</identifier>
+    <datestamp>{tietue.aika()}</datestamp>
     {!<setSpec>physic:hep</setSpec>!}
    </header>
   {/for}

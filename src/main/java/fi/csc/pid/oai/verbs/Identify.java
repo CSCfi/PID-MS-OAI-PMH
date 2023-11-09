@@ -2,8 +2,6 @@ package fi.csc.pid.oai.verbs;
 
 import fi.csc.pid.oai.XML;
 
-import java.time.LocalDateTime;
-
 import static fi.csc.pid.oai.XML.*;
 import static fi.csc.pid.oai.verbs.List.IDENTIFY;
 import static fi.csc.pid.oai.verbs.List.LM;
